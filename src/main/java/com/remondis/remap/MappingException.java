@@ -77,9 +77,16 @@ public class MappingException extends RuntimeException {
     return new MappingException(createUnmappedMessage(unmapped));
   }
 
-  static MappingException noMapperFound(Class<?> sourceType, Class<?> destinationType) {
-    return new MappingException(String.format("No mapper found for type mapping from %s to %s.", sourceType.getName(),
-        destinationType.getName()));
+  static MappingException noMapperFound(Class<?> sourcePropertyType, PropertyDescriptor sourceProperty,
+                                        Class<?> destinationPropertyType, PropertyDescriptor destinationProperty) {
+    return new MappingException(
+            String.format("No mapper found for mapping from '%s.%s' of type '%s' to '%s.%s' of type '%s'.",
+                    sourceProperty.getReadMethod().getDeclaringClass().getName(),
+                    sourceProperty.getName(),
+                    sourcePropertyType.getName(),
+                    destinationProperty.getReadMethod().getDeclaringClass().getName(),
+                    destinationProperty.getName(),
+                    destinationPropertyType.getName()));
   }
 
   static MappingException duplicateMapper(Class<?> source, Class<?> destination) {

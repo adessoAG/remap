@@ -475,7 +475,7 @@ public final class Mapping<S, D> {
    *        The source type
    * @param destinationType
    *        The destination type
-   * @return Returns the registered mapper.
+   * @return Returns the registered mapper or null if no mapper of this type was registered.
    */
   @SuppressWarnings("unchecked")
   <S1, D1> Mapper<S1, D1> getMapperFor(Class<S1> sourceType, Class<D1> destinationType) {
@@ -483,7 +483,7 @@ public final class Mapping<S, D> {
     if (mappers.containsKey(projection)) {
       return (Mapper<S1, D1>) mappers.get(projection);
     } else {
-      throw MappingException.noMapperFound(sourceType, destinationType);
+      return null;
     }
   }
 
